@@ -1,0 +1,44 @@
+{
+    "Books": [
+        {
+            "ID": "BK1001",
+            "Name": "The Silent Horizon",
+            "Author": "Lena Markov",
+            "Genre": "Science Fiction",
+            "ReleaseDate": "2021-04-12",
+            "AvailableQuantity": 12
+        },
+        {
+            "ID": "BK1002",
+            "Name": "Whispers of the Steppe",
+            "Author": "Aruzhan Beketova",
+            "Genre": "Historical Fiction",
+            "ReleaseDate": "2019-09-30",
+            "AvailableQuantity": 5
+        },
+        {
+            "ID": "BK1003",
+            "Name": "Broken Cipher",
+            "Author": "Jonathan Pierce",
+            "Genre": "Thriller",
+            "ReleaseDate": "2023-02-18",
+            "AvailableQuantity": 7
+        },
+        {
+            "ID": "BK1004",
+            "Name": "Into the Emberlight",
+            "Author": "Soren Hale",
+            "Genre": "Fantasy",
+            "ReleaseDate": "2020-07-08",
+            "AvailableQuantity": 3
+        },
+        {
+            "ID": "BK1005",
+            "Name": "The Algorithm of Fate",
+            "Author": "Mira Tanaka",
+            "Genre": "Cyberpunk",
+            "ReleaseDate": "2022-11-05",
+            "AvailableQuantity": 10
+        }
+    ]
+}
