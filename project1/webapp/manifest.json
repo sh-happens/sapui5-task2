@@ -54,7 +54,7 @@
       },
       "book": {
         "type": "sap.ui.model.json.JSONModel",
-        "uri": "Books.json"
+        "uri": "model/books/data.json"
       }
     },
     "resources": {

@@ -6,10 +6,7 @@ sap.ui.define([
 
     return Controller.extend("project1.controller.Main", {
         onInit() {
-            const oModel = new JSONModel()
-            oModel.loadData("Books.json")
-
-            this.getView().setModel(oModel,"books")
+          
         }
     });
 });
