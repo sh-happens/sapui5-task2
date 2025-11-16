@@ -2,5 +2,45 @@
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m">
     <Page id="page" title="{i18n>title}">
+        <Table
+            id="bookList"
+            class="sapUiResponsiveMargin"
+            width="auto"
+            items="{
+				path : 'book>/Books'
+			}">
+            <columns>
+                <Column>
+                    <Text text="ID" />
+                </Column>
+                <Column>
+                    <Text text="Name" />
+                </Column>
+                <Column>
+                    <Text text="Author" />
+                </Column>
+                <Column>
+                    <Text text="Genre" />
+                </Column>
+                <Column>
+                    <Text text="Release Date" />
+                </Column>
+                <Column>
+                    <Text text="Available" />
+                </Column>
+            </columns>
+            <items>
+                <ColumnListItem>
+                    <cells>
+                        <Text text="{book>ID}" />
+                        <Text text="{book>Name}" />
+                        <Text text="{book>Author}" />
+                        <Text text="{book>Genre}" />
+                        <Text text="{book>ReleaseDate}" />
+                        <Text text="{book>AvailableQuantity}" />
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
     </Page>
 </mvc:View>
