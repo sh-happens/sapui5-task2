@@ -7,8 +7,7 @@ sap.ui.define([
 
 
         getModel: function (sName) {
-            return this.getOwnerComponent().getModel(sName)
-                || this.getView().getModel(sName);
+            return this.getView().getModel(sName);
         },
 
   

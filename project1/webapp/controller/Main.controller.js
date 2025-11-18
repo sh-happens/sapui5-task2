@@ -8,40 +8,38 @@ sap.ui.define([
 
     return BaseController.extend("project1.controller.Main", {
         onInit() {
+            const oBookModel = new JSONModel();
+            oBookModel.loadData("model/books/data.json");
+
+            this.getView().setModel(oBookModel, "book");
+
             const oViewModel = new JSONModel({
                 titleQuery: "",
                 selectedGenre: "",
                 genres: []
             });
-
             this.setModel(oViewModel, "view");
-            this._populateGenreSelect();
+
+            oBookModel.attachRequestCompleted(() => {
+                this._populateGenreSelect();
+            });
         },
+
 
         _populateGenreSelect: function () {
             const oBookModel = this.getModel("book");
-            console.log("oBookModel: ",oBookModel)
             const aBooks = oBookModel.getProperty("/Books");
 
             const genres = [...new Set(aBooks.map(book => book.Genre))];
 
-            const oViewModel = this.getModel("view");
-            oViewModel.setProperty("/genres", genres);
-
-            const oSelect = this.byId("genreFilter");
-
-            oSelect.removeAllItems();
-            oSelect.addItem(new sap.ui.core.Item({
-                key: "",
-                text: "All Genres"
-            }));
+            const aGenreItems = [{ key: "", text: "All Genres" }];
 
             genres.forEach(genre => {
-                oSelect.addItem(new sap.ui.core.Item({
-                    key: genre,
-                    text: genre
-                }));
+                aGenreItems.push({ key: genre, text: genre });
             });
+
+            const oViewModel = this.getModel("view");
+            oViewModel.setProperty("/genres", aGenreItems);
         },
 
         onApplyFilters: function () {
@@ -62,14 +60,9 @@ sap.ui.define([
             const oTable = this.byId("bookList");
             oTable.getBinding("items").filter(aFilters);
         },
-        onGenreChange: function () {
-            this.onApplyFilters();
-        },
         onAddRecord: function () {
             const oModel = this.getModel("book")
             const aBooks = oModel.getProperty("/Books")
-            console.log('abooks: ', aBooks)
-
 
             aBooks.push({
                 ID: "",
@@ -81,31 +74,32 @@ sap.ui.define([
             });
 
             oModel.setProperty("/Books", aBooks);
-            oModel.refresh(true);
         },
         onDeleteRecord: function () {
             const oTable = this.byId("bookList");
             const oModel = this.getModel("book");
 
-            const aSelectedContexts = oTable.getSelectedContexts("book");
-            const aBooks = oModel.getProperty("/Books");
+            const aSelectedItems = oTable.getSelectedItems();
 
-            const aIndices = aSelectedContexts.map(item => {
-                return parseInt(item.getPath().split("/").pop(), 10);
-            });
+            if (!aSelectedItems.length) {
+                return;
+            }
 
-            aIndices.sort((a, b) => b - a);
+            const aSelectedIDs = aSelectedItems
+                .map(item => item.getBindingContext("book"))
+                .filter(ctx => !!ctx)
+                .map(ctx => ctx.getProperty("ID"));
 
-            aIndices.forEach(index => {
-                aBooks.splice(index, 1);
+            if (!aSelectedIDs.length) {
+                return;
+            }
+
+            const aBooks = oModel.getProperty("/Books").filter(book => {
+                return !aSelectedIDs.includes(book.ID);
             });
 
             oModel.setProperty("/Books", aBooks);
-            oModel.refresh(true);
-
             oTable.removeSelections();
         }
-
-
     });
 });
