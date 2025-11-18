@@ -1,14 +1,50 @@
 <mvc:View controllerName="project1.controller.Main"
     xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
     xmlns="sap.m">
     <Page id="page" title="{i18n>title}">
         <Table
             id="bookList"
             class="sapUiResponsiveMargin"
             width="auto"
+            mode="MultiSelect"
             items="{
 				path : 'book>/Books'
 			}">
+            <headerToolbar>
+                <Toolbar>
+                    <Title text="Books" />
+                    <ToolbarSpacer />
+
+                    <Button text="Add Record" icon="sap-icon://add" press=".onAddRecord" />
+                    <Button text="Delete Record" icon="sap-icon://delete" press=".onDeleteRecord" />
+
+                    <ToolbarSeparator />
+
+                    <Input
+                        id="titleFilter"
+                        width="180px"
+                        placeholder="Filter by title..."
+                        value="{view>/titleQuery}"
+                    />
+
+                    <Select
+                        id="genreFilter"
+                        width="150px"
+                        selectedKey="{view>/selectedGenre}"
+                        items="{view>/genres}"
+                    >
+                        <items>
+                            <core:Item key="{view>key}" text="{view>text}" />
+                        </items>
+                    </Select>
+
+                    <Button
+                        text="Filter"
+                        press=".onApplyFilters" />
+                </Toolbar>
+            </headerToolbar>
+
             <columns>
                 <Column>
                     <Text text="ID" />
